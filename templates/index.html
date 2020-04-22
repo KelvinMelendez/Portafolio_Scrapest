@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Scrapping Form</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="static/index.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="section">
+            ABOUT THE PROJECT
+        </div>
+        <div class="contentsection">
+            This is a project that scrap relevent information from the page <b>https://www.fincaraiz.com.do</b>.
+            This page is about selling living places in Argentina. We can find information such as: price, place,
+            weather, #rooms, #bathrooms and so on. With this tool we can create <b><i>Scrapping Orders</i></b> in order
+            to scrap information about living places relevant for you.
+            <br><br>
+            If you are interested in the development process of this project, please check the github repository here: <a href="#">Github</a>
+        </div>
+        <div class="section">
+            ORDER DETAILS
+        </div>
+        <div class="contentsection">
+            <form method="POST" action="/saveorder">
+                <label>Type Living place</label><br>
+                <select name="typeliving" id="typeliving">
+                    <option value="Proyectos Nuevos">Proyectos Nuevos</option>
+                    <option value="Vivienda">Vivienda</option>
+                    <option value="Inmuebles Comerciales">Inmuebles Comerciales</option>
+                </select>
+                <br><br>
+                <label>What Looking For</label><br>
+                <select name="lookingfor" id="lookingfor">
+                    <option value="Apartamento">Apartamento</option>
+                    <option value="Casa">Casa</option>
+                    <option value="Apartaestudio">Apartaestudio</option>
+                </select>
+                <br><br>
+                <label>Transanction Type</label><br>
+                <select name="Transanction" id="Transanction">
+                    <option value="Venta">Venta</option>
+                    <option value="Arriendo">Arriendo</option>
+                    <option value="Alquiler Vacacional">Alquiler Vacacional</option>
+                </select>
+                <br><br>
+                <label>Min Results</label><br>
+                <input name="minresult" type="number" max="50" required>
+                <br><br>
+                {% if orderid %}
+                    <h2> Your order is: {{ orderid }}</h2>
+                {% endif %}
+                <center>
+                    <button class="createorder">Create Order</button>
+                </center>
+            </form>
+        </div>
+        <div class="section">
+            GET RESULTS
+        </div>
+        <div class="contentsection">
+            <form method="POST" action="/getorder">
+                <center>
+                    <span>If you know your Order Number</span>
+                </center><br>
+                <label>Type your Order</label><br>
+                <input name ="orderid" type="text" required>
+                <center>
+                    <button class="createorder">Get Order</button>
+                </center>
+            </form>
+            <br><br>
+            <center>
+                <span>Available Information</span>
+            </center>
+            <br><br><br>
+            <table id="table_id" class="display">
+                <thead>
+                    <tr>
+                        <th>URL</th>
+                        <th>Place Area</th>
+                        <th>Const. Area</th>
+                        <th>Rooms</th>
+                        <th>Bath</th>
+                        <th>Weather</th>
+                        <th>Location</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if datos %}
+                        {% for item in datos %}
+                            <tr>
+                                <td>{{ item[1] }}</td>
+                                <td>{{ item[2] }}</td>
+                                <td>{{ item[3] }}</td>
+                                <td>{{ item[4] }}</td>
+                                <td>{{ item[5] }}</td>
+                                <td>{{ item[6] }}</td>
+                                <td>{{ item[7] }}</td>
+                                <td>{{ item[8] }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+        <script src="static/index.js"></script>
+    </body>
+</html>
