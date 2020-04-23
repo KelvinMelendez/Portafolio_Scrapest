@@ -59,12 +59,12 @@ In order deploy the entire ecosystem. Make the following steps:
 6. Start the Server by run following commands (WINDOWS ONLY)
     ```bash
     set FLASK_APP=server.py
-    python -m flask run --host=0.0.0.0
+    python -m flask run --host=0.0.0.0 -p 80
     ```
 7. Start the Server by run following commands (LINUX ONLY):
     ```bash
     export FLASK_APP=server.py
-    flask run --host=0.0.0.0
+    flask run --host=0.0.0.0 -p 80
     ```
 
 Once previous steps are done, you can get the GUI by going to your navigator and go to url: http://localhost:5000

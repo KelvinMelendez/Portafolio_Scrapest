@@ -1,4 +1,4 @@
-import time,os,requests,sys,csv
+import time,os,requests,sys,csv,platform
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -8,6 +8,9 @@ from selenium.webdriver.chrome.options import Options
 
 #Import importants functions support files
 from db import gettingOrders,inserturl,gettingurls_order,updating_orderstatus,initialverifications,insertarError
+
+#Identify platform
+platform_system=platform.platform()
 
 #Options
 options = Options()
@@ -19,7 +22,11 @@ options.add_argument('disable-infobars')
 options.add_argument("--disable-extensions")
 
 #Init Chrome Driver
-navegador=webdriver.Chrome(executable_path=os.getcwd()+"\\chromedriver.exe",chrome_options=options)
+if "Linux" in platform_system:
+  navegador=webdriver.Chrome(executable_path="chromedriver",chrome_options=options)
+else:
+  navegador=webdriver.Chrome(executable_path=os.getcwd()+"\\chromedriver.exe",chrome_options=options)
+
 #navegador=webdriver.Chrome(executable_path=os.getcwd()+"\\chromedriver.exe")
 #navegador.maximize_window()
 
@@ -100,6 +107,7 @@ while True:
         #Verification in Database
         initialverifications()
         print("Data Base starts!")
+        print("Bot Starts!")
         
         #----------------------------------------------------------------------------------------------------------
         #Initiate the navigator
@@ -114,6 +122,8 @@ while True:
         if len(orders)<=0:
             time.sleep(360)
             continue
+            
+        print("A Total of: "+str(len(orders))+" will be evaluated")
         
         #Getting all urls already in db
         urls_db=gettingurls_order(orders["OrderID"])
@@ -215,6 +225,7 @@ while True:
                     url=a.get_attribute("href")
                     if ("https://www.fincaraiz.com.co" in url) and (url not in urls_db):
                         inserturl(orders["OrderID"],url)
+                        print("URL inserted")
                         urls.append(url)
                     else:
                         if nextpage>5:
@@ -229,6 +240,7 @@ while True:
                     for button in link_buttons:
                         if "Ir a la pagina Siguiente" in button.get_attribute("title"):
                             button.click()
+                            print("Next page")
                             startagain=True
                             break
                 if startagain:
@@ -236,6 +248,8 @@ while True:
     except Exception as e:
         #Saving Error
         insertarError("Error in the General loop in Scrapper",str(e))
+        
+        print("Error Alert")
 
         #Delete and destroy navagador
         navegador.close()
@@ -243,4 +257,7 @@ while True:
         time.sleep(10)
 
         #Create new navegador
-        navegador=webdriver.Chrome(executable_path=os.getcwd()+"\\chromedriver.exe",chrome_options=options)
+        if "Linux" in platform_system:
+          navegador=webdriver.Chrome(executable_path="chromedriver",chrome_options=options)
+        else:
+          navegador=webdriver.Chrome(executable_path=os.getcwd()+"\\chromedriver.exe",chrome_options=options)

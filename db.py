@@ -24,7 +24,6 @@ def initialverifications():
     cursor=connection.cursor()
     cursor.execute("SHOW DATABASES")
     for database in cursor:
-        print(database)
         if settings["database_name"] in database:
             errors.append("Database exists! :)")
             break

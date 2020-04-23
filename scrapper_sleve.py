@@ -82,6 +82,8 @@ def gettingInformation(orderid,url):
 
     #Adding information to mongodb
     insertdataoffer(orderid,url,results)
+    
+    print("Information captured!")
 
     #Udating url
     updating_urlstatus(orderid,url)
@@ -101,7 +103,7 @@ while True:
                 print("URL Completed")
         else:
             print("Waiting 1 hour to start over")
-            time.sleep(10)
+            time.sleep(360)
     except Exception as e:
         print(str(e))
         insertarError(url,str(e))
