@@ -1,4 +1,4 @@
-import time,os,requests,sys,csv,subprocess
+import time,os,requests,sys,csv
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -20,12 +20,8 @@ options.add_argument("--disable-extensions")
 
 #Init Chrome Driver
 navegador=webdriver.Chrome(executable_path=os.getcwd()+"\\chromedriver.exe",chrome_options=options)
-navegador=webdriver.Chrome(executable_path=os.getcwd()+"\\chromedriver.exe")
-navegador.maximize_window()
-
-
-#Init Scrapper_sleve
-subprocess.call(" python scrapper_sleve.py 1",shell=True)
+#navegador=webdriver.Chrome(executable_path=os.getcwd()+"\\chromedriver.exe")
+#navegador.maximize_window()
 
 #----------------------------------------------------------------------------------------------------------
                                         #Function Support
